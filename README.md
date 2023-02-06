@@ -1,4 +1,4 @@
-# fundamentals-CI-integration
+# Continuous Integration 
 Git repository for Lab 2 Continuous Integration (Fundamentals of Software Engineering DD2480, Royal Institute of Technology 2023)
 
 ## Summary 
