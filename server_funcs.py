@@ -36,17 +36,26 @@ def notify():
 
 
 
-def send_email(sender_email, receiver_email)
+def send_email(receiver_email, message)
+	sender_email = “continuousintegration2023@gmail.com”
+	receiver_email = “continuousintegration2023@gmail.com”
+	# password = input(str(“please enter your password : ”))
+	
+	message = “Hey, this was sent using python :D”
+	
+	simple_email_context = ssl.create_default_context()
+	
 	smtp_port = 587			# Standard secure SMTP port
 	smtp_server = "smtp.gmail.com"  # Google SMTP Server
-	sender_email = “continuousintegration2023@gmail.com”
-	receiver_email = “”
-	password = input(str(“please enter your password : ”))
-	message = “Hey, this was sent using python :D”
-	server = smtplib.SMTP(smtp_server, smtp_port)
-	server.starttls()
-	server.login(sernder_mail, password)
-	print(“Login success”)
-	server.sendmail(sender_mail, receiver_email, message) # Sends email
-	print(“Email has been sent to ”, receiver_email)
 	
+	try:
+		server = smtplib.SMTP(smtp_server, smtp_port)
+		server.starttls(context=simple_email_context)
+		server.login(sernder_mail, "bengbeng%ED")
+		print(“Login success”)
+		print("Sending email to {receiver_email}")
+		server.sendmail(sender_mail, receiver_email, message) # Sends email
+		print(“Email has been sent to ”, receiver_email)
+	
+	except Exeption as e:
+		print(e)
