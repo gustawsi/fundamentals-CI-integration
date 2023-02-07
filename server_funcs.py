@@ -1,4 +1,9 @@
-def build(body):
+import git
+import os
+
+def build(self, body):
+	repo = git.Repo.clone_from("https://github.com/anna-sara-maria/fundamentals-CI-integration", os.path.join("C:/Users/Adam/Desktop/fundamentals-CI-integration", "temp_repo"), branch="main")
+	print("body: ", repo)
 	#takes output from parse_post_json, clones the repo from git
 	#compiles code - lints python (flake8)
 	#return 0 on success, 1 on fail
