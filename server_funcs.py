@@ -1,3 +1,6 @@
+import smtplib
+import ssl
+
 def build(body):
 	#takes output from parse_post_json, clones the repo from git
 	#compiles code - lints python (flake8)
@@ -22,3 +25,28 @@ def save_results():
 
 def restore():
 	#deletes the cloned repo and compiled code in preparation for next webhook
+	
+	
+	
+def notify():
+	# when code is received
+	#	tell everyone that code was received
+	# 
+	# This one will use send_email()
+
+
+
+def send_email(sender_email, receiver_email)
+	smtp_port = 587			# Standard secure SMTP port
+	smtp_server = "smtp.gmail.com"  # Google SMTP Server
+	sender_email = “continuousintegration2023@gmail.com”
+	receiver_email = “”
+	password = input(str(“please enter your password : ”))
+	message = “Hey, this was sent using python :D”
+	server = smtplib.SMTP(smtp_server, smtp_port)
+	server.starttls()
+	server.login(sernder_mail, password)
+	print(“Login success”)
+	server.sendmail(sender_mail, receiver_email, message) # Sends email
+	print(“Email has been sent to ”, receiver_email)
+	
