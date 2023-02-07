@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 import server_funcs
+import json
 
 hostName = "localhost"
 serverPort = 8011
@@ -22,18 +23,28 @@ class Server(BaseHTTPRequestHandler):
 
     
     def do_POST(self):
+        content_len = int(self.headers.get('Content-Length'))
+        post_byte_data = self.rfile.read(content_len)
+        body_data = self.parse_post_data(post_byte_data)
+
         self.send_response(200)
-          
-        server_funcs.build(self.parse_post_json())
+        server_funcs.build(body_data)
         #check if build suceeded - yes, continue with test, else skip to save results
         server_funcs.test()
         server_funcs.save_results()
         server_funcs.restore()
 
     
-    def parse_post_json(self):
+    def parse_post_data(self, post_byte_data):
+        # Decode UTF-8 bytes to Unicode, and convert single quotes to double quotes to make it valid JSON
+        post_json = post_byte_data.decode('utf8').replace("'", '"')
+        request = json.loads(post_json)
+
 	    #parses the post body into a format handled by the build function
-        return post_json
+        body_data = {
+            "url": request["issue"]["repository_url"],
+        }
+        return body_data
 
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), Server)
