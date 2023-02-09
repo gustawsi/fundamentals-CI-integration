@@ -26,9 +26,10 @@ class Server(BaseHTTPRequestHandler):
         content_len = int(self.headers.get('Content-Length'))
         post_byte_data = self.rfile.read(content_len)
         body_data = self.parse_post_data(post_byte_data)
-
+        temp_path = server_funcs.create_temp_path()
+        
         self.send_response(200)
-        server_funcs.build(body_data)
+        server_funcs.build(body_data, temp_path)
         #check if build suceeded - yes, continue with test, else skip to save results
         server_funcs.test()
         server_funcs.save_results()

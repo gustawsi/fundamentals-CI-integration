@@ -5,13 +5,15 @@ import os
 import config
 import tempfile
 
-def build(body):
+
+def create_temp_path():
+	temp_dir = tempfile.TemporaryDirectory()
+	return config.temp_repo_path + temp_dir.name
+
+def build(body, temp_path):
 	#takes output from parse_post_json, clones the repo from git
 	#compiles code - lints python (flake8)
 	#return 1 on success, 0 on fail
-
-	temp_dir = tempfile.TemporaryDirectory()
-	temp_path = config.temp_repo_path + temp_dir.name
 	git.Repo.clone_from(body["url"], os.path.join(temp_path), branch=body["branch"])
 	res = os.system("python3 " + temp_path + " flake8")
 	if res == 0:
