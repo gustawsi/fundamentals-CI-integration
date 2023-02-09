@@ -35,26 +35,21 @@ def notify():
 	# test results are sent to ... everyone? or just the person who sent the code?
 
 
+
 def send_email(receiver_email, message):
 	sender_email = "continuousintegration2023@gmail.com"
-	receiver_email = "continuousintegration2023@gmail.com"
-	# password = input(str(“please enter your password : ”))
-
-	message = "Hey, this was sent using python :D" 
-
+	# the password will be integrated into the code but not here on github :)
+	password = input(str("please enter your password : ")) 
 	simple_email_context = ssl.create_default_context()
-
 	smtp_port = 587			# Standard secure SMTP port
 	smtp_server = "smtp.gmail.com"  # Google SMTP Server
 
 	try:
 		server = smtplib.SMTP(smtp_server, smtp_port)
 		server.starttls(context=simple_email_context)
-		server.login(sender_email, "bengbeng%ED")
-		print("Login success")
-		print("Sending email to {receiver_email}")
+		server.login(sender_email, password)
 		server.sendmail(sender_email, receiver_email, message) # Sends email
-		print("Email has been sent to {receiver_email}")
+		print("Email has been sent to", receiver_email)
 
 	except Exception as e:
 		print(e)
