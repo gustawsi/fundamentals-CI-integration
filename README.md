@@ -13,7 +13,7 @@ Limitations: liability and warranty.
 
 ## Statement of contributions
 
-### Adam Melander (adrelix / adammel)
+### Adam Melander (adrelix / adammel) 
 
 ### Anna Kristiansson (anna-sara-maria / annakris) 
  
