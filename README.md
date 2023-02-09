@@ -1,6 +1,6 @@
 # Continuous Integration 
 Git repository for Lab 2 Continuous Integration (Fundamentals of Software Engineering DD2480, Royal Institute of Technology 2023) 
-
+ 
 ## Summary 
 This repository contains a continuous integration project that can be connected to different github webhooks to perform automatic tests on newly pushed changes. The result is then e-mailed to the person pushing the changes.
 
