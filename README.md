@@ -7,7 +7,7 @@ This repository contains a continuous integration project that can be connected 
 ## Licence
 Permissions: private and commercial use, modification, distribution.
 Conditions: license and copyright notice.
-Limitations: liability and warranty.
+Limitations: liability and warranty. 
 
 ## Operate the program
 #### Run server.py with: 
