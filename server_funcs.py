@@ -11,7 +11,7 @@ def build(body):
 
 	temp_dir = tempfile.TemporaryDirectory()
 	temp_path = config.temp_repo_path + temp_dir.name
-	git.Repo.clone_from(config.git_repo_url, os.path.join(temp_path), branch="git-compilation")
+	git.Repo.clone_from(body["url"], os.path.join(temp_path), branch=body["branch"])
 	res = os.system("python3 " + temp_path + " flake8")
 	if res == 0:
 		return 1

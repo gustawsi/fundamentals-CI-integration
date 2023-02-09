@@ -41,8 +41,16 @@ class Server(BaseHTTPRequestHandler):
         request = json.loads(post_json)
 
 	    #parses the post body into a format handled by the build function
+        url = request["repository"]["html_url"]
+        ref = request["ref"]
+        branch = ref.replace("/", " ").split(" ")[-1]
+        pusher_email = request["pusher"]["email"]
+
         body_data = {
-            "url": request["issue"]["repository_url"],
+            "url": url,
+            "ref": ref,
+            "branch": branch,
+            "pusher_email": pusher_email,
         }
         return body_data
 
