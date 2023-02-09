@@ -4,11 +4,31 @@ import git
 import os
 import config
 import tempfile
+import json
 
 
 def create_temp_path():
 	temp_dir = tempfile.TemporaryDirectory()
 	return config.temp_repo_path + temp_dir.name
+
+def parse_post_data( post_byte_data):
+        # Decode UTF-8 bytes to Unicode, and convert single quotes to double quotes to make it valid JSON
+        post_json = post_byte_data.decode('utf8').replace("'", '"')
+        request = json.loads(post_json)
+
+	    #parses the post body into a format handled by the build function
+        url = request["repository"]["html_url"]
+        ref = request["ref"]
+        branch = ref.replace("/", " ").split(" ")[-1]
+        pusher_email = request["pusher"]["email"]
+
+        body_data = {
+            "url": url,
+            "ref": ref,
+            "branch": branch,
+            "pusher_email": pusher_email,
+        }
+        return body_data
 
 def build(body, temp_path):
 	#takes output from parse_post_json, clones the repo from git
