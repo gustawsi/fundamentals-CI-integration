@@ -14,7 +14,7 @@ Limitations: liability and warranty.
 ## Statement of contributions
 
 ### Adam Melander (adrelix / adammel)
-Post request handling
+Post request handling 
 Pulling git repositories
 Flake8 linting of repositories
 
