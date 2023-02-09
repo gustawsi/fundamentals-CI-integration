@@ -5,7 +5,12 @@ hostName = "localhost"
 serverPort = 8011
 
 class Server(BaseHTTPRequestHandler):
-  
+    """
+    A simple server with a do_GET method and a do_POST method. 
+    The server is a continuous integration server that can be connected to different github webhooks 
+    to perform automatic tests on newly pushed changes.
+    """
+
     def do_GET(self):
       self.send_response(200)
       self.send_header("Content-type", "text/html")
@@ -21,6 +26,10 @@ class Server(BaseHTTPRequestHandler):
 
     
     def do_POST(self):
+        """
+        Handles incoming http POST requests. 
+        Parses it, builds + tests corresponding repository and saves the result.
+        """
         content_len = int(self.headers.get('Content-Length'))
         post_byte_data = self.rfile.read(content_len)
         body_data = server_funcs.parse_post_data(post_byte_data)
@@ -34,6 +43,7 @@ class Server(BaseHTTPRequestHandler):
         server_funcs.restore()
 
 
+# Starts up the server on selected port
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), Server)
     print("Server started http://%s:%s" % (hostName, serverPort))
