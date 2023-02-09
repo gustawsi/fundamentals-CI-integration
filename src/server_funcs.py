@@ -21,13 +21,20 @@ def parse_post_data( post_byte_data):
         ref = request["ref"]
         branch = ref.replace("/", " ").split(" ")[-1]
         pusher_email = request["pusher"]["email"]
+        pusher_name = request["pusher"]["name"]
+        full_repo_name = request["repository"]["full_name"] + "/" + branch
+        date = request["head_commit"]["timestamp"]
 
         body_data = {
             "url": url,
             "ref": ref,
+			"full_repo_name": full_repo_name,
             "branch": branch,
+			"date": date,
+			"pusher_name": pusher_name,
             "pusher_email": pusher_email,
         }
+        print(body_data)
         return body_data
 
 def build(body, temp_path):
