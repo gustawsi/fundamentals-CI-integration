@@ -5,7 +5,7 @@ Git repository for Lab 2 Continuous Integration (Fundamentals of Software Engine
 
 ## Licence
 Permissions: private and commercial use, modification, distribution.
-Conditions: license and copyright notice.
+Conditions: license and copyright notice. 
 Limitations: liability and warranty.
 
 ## Operate the program
