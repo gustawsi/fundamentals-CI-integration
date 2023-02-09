@@ -26,24 +26,24 @@ def parse_post_data(post_byte_data):
     request = json.loads(post_json)
 
 	    #parses the post body into a format handled by the build function
-        url = request["repository"]["html_url"]
-        ref = request["ref"]
-        branch = ref.replace("/", " ").split(" ")[-1]
-        pusher_email = request["pusher"]["email"]
-        pusher_name = request["pusher"]["name"]
-        full_repo_name = request["repository"]["full_name"] + "/" + branch
-        date = request["head_commit"]["timestamp"]
+    url = request["repository"]["html_url"]
+    ref = request["ref"]
+    branch = ref.replace("/", " ").split(" ")[-1]
+    pusher_email = request["pusher"]["email"]
+    pusher_name = request["pusher"]["name"]
+    full_repo_name = request["repository"]["full_name"] + "/" + branch
+    date = request["head_commit"]["timestamp"]
 
-        body_data = {
-            "url": url,
-            "ref": ref,
-			"full_repo_name": full_repo_name,
-            "branch": branch,
-			"date": date,
-			"pusher_name": pusher_name,
-            "pusher_email": pusher_email,
-        }
-        return body_data
+    body_data = {
+        "url": url,
+        "ref": ref,
+        "full_repo_name": full_repo_name,
+        "branch": branch,
+        "date": date,
+        "pusher_name": pusher_name,
+        "pusher_email": pusher_email,
+    }
+    return body_data
 
 
 def build(body, temp_path):
