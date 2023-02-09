@@ -8,12 +8,13 @@ import config
 from datetime import datetime
 
 def create_temp_path():
-    """
-    Creates a path to a temporary directory where the repo can be stored
-    """
-    temp_dir = tempfile.TemporaryDirectory()
-    return config.temp_repo_path + temp_dir.name
+	temp_dir = tempfile.TemporaryDirectory()
+	return config.temp_repo_path + temp_dir.name
 
+def parse_post_data( post_byte_data):
+        # Decode UTF-8 bytes to Unicode, and convert single quotes to double quotes to make it valid JSON
+        post_json = post_byte_data.decode('utf8').replace("'", '"')
+        request = json.loads(post_json)
 
 def parse_post_data(post_byte_data):
     """
@@ -24,19 +25,25 @@ def parse_post_data(post_byte_data):
     post_json = post_byte_data.decode('utf8').replace("'", '"')
     request = json.loads(post_json)
 
-    # parses the post body into a format handled by the build function
-    url = request["repository"]["html_url"]
-    ref = request["ref"]
-    branch = ref.replace("/", " ").split(" ")[-1]
-    pusher_email = request["pusher"]["email"]
+	    #parses the post body into a format handled by the build function
+        url = request["repository"]["html_url"]
+        ref = request["ref"]
+        branch = ref.replace("/", " ").split(" ")[-1]
+        pusher_email = request["pusher"]["email"]
+        pusher_name = request["pusher"]["name"]
+        full_repo_name = request["repository"]["full_name"] + "/" + branch
+        date = request["head_commit"]["timestamp"]
 
-    body_data = {
-        "url": url,
-        "ref": ref,
-        "branch": branch,
-        "pusher_email": pusher_email,
-    }
-    return body_data
+        body_data = {
+            "url": url,
+            "ref": ref,
+			"full_repo_name": full_repo_name,
+            "branch": branch,
+			"date": date,
+			"pusher_name": pusher_name,
+            "pusher_email": pusher_email,
+        }
+        return body_data
 
 
 def build(body, temp_path):
