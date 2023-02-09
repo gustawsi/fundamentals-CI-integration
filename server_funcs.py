@@ -1,10 +1,12 @@
 import git
 import os
 import config 
+import tempfile
+
 
 def build(body):
-	repo = git.Repo.clone_from(config.git_repo_url, os.path.join(config.temp_repo_path), branch="main")
-	print("body: ", repo)
+	temp_dir = tempfile.TemporaryDirectory()
+	repo = git.Repo.clone_from(config.git_repo_url, os.path.join(config.temp_repo_path + temp_dir.name), branch="main")
 	#takes output from parse_post_json, clones the repo from git
 	#compiles code - lints python (flake8)
 	#return 0 on success, 1 on fail
