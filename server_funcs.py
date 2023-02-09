@@ -30,17 +30,20 @@ def restore():
 	
 def notify():
 	# when code is received
-	#	tell everyone that code was received
-	# 
-	# This one will use send_email()
+	#	send emails to everyone to tell them code was recieved
+	# then tests are done
+	# test results are sent to ... everyone? or just the person who sent the code?
 
 
 def send_email(receiver_email, message):
+	"""
+	My idea here is that ...
+	"""
 	sender_email = "continuousintegration2023@gmail.com"
 	receiver_email = "continuousintegration2023@gmail.com"
 	# password = input(str(“please enter your password : ”))
 
-	message = "Hey, this was sent using python :D"
+	message = "Hey, this was sent using python :D" 
 
 	simple_email_context = ssl.create_default_context()
 
