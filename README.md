@@ -14,6 +14,9 @@ Limitations: liability and warranty.
 ## Statement of contributions
 
 ### Adam Melander (adrelix / adammel)
+Post request handling
+Pulling git repositories
+flake8 linting of repositories
 
 ### Anna Kristiansson (anna-sara-maria / annakris) 
 
