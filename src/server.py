@@ -36,10 +36,11 @@ class Server(BaseHTTPRequestHandler):
         temp_path = server_funcs.create_temp_path()
 
         self.send_response(200)
-        server_funcs.build(body_data, temp_path)
+        build_res = server_funcs.build(body_data, temp_path)
         #check if build suceeded - yes, continue with test, else skip to save results
-        server_funcs.test()
-        server_funcs.save_results()
+        test_res = server_funcs.test()
+        out = server_funcs.save_results(body_data, build_res, test_res, temp_path)
+
         server_funcs.restore()
 
 
