@@ -1,5 +1,5 @@
 # Continuous Integration 
-Git repository for Lab 2 Continuous Integration (Fundamentals of Software Engineering DD2480, Royal Institute of Technology 2023)
+Git repository for Lab 2 Continuous Integration (Fundamentals of Software Engineering DD2480, Royal Institute of Technology 2023) 
 
 ## Summary 
 
@@ -14,6 +14,9 @@ Limitations: liability and warranty.
 ## Statement of contributions 
 
 ### Adam Melander (adrelix / adammel)
+Post request handling 
+Pulling git repositories
+Flake8 linting of repositories
 
 ### Anna Kristiansson (anna-sara-maria / annakris) 
 
