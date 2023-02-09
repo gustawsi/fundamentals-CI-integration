@@ -36,9 +36,6 @@ def notify():
 
 
 def send_email(receiver_email, message):
-	"""
-	My idea here is that ...
-	"""
 	sender_email = "continuousintegration2023@gmail.com"
 	receiver_email = "continuousintegration2023@gmail.com"
 	# password = input(str(“please enter your password : ”))
