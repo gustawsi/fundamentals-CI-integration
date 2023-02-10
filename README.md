@@ -39,6 +39,3 @@ save_results function
 ### Gustaw Siedlarski (gustawsi)
 
 ### Levi Leyh (levi-tating)
-
- 
- 
