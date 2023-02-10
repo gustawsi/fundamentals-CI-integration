@@ -42,7 +42,6 @@ class Server(BaseHTTPRequestHandler):
         out = server_funcs.save_results(body_data, build_res, test_res, temp_path)
         # send information about commit & test result to recipients on email 
         server_funcs.send_email(out)
-        server_funcs.restore()
 
 
 # Starts up the server on selected port

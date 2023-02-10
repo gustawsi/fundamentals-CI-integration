@@ -9,15 +9,20 @@ from datetime import datetime
 import requests
 import unittest
 import subprocess
+import importlib.util
+import sys
+
 
 def create_temp_path():
-	temp_dir = tempfile.TemporaryDirectory()
-	return config.temp_repo_path + temp_dir.name
+    temp_dir = tempfile.TemporaryDirectory()
+    return config.temp_repo_path + temp_dir.name
 
-def parse_post_data( post_byte_data):
-        # Decode UTF-8 bytes to Unicode, and convert single quotes to double quotes to make it valid JSON
-        post_json = post_byte_data.decode('utf8').replace("'", '"')
-        request = json.loads(post_json)
+
+def parse_post_data(post_byte_data):
+    # Decode UTF-8 bytes to Unicode, and convert single quotes to double quotes to make it valid JSON
+    post_json = post_byte_data.decode('utf8').replace("'", '"')
+    request = json.loads(post_json)
+
 
 def parse_post_data(post_byte_data):
     """
@@ -28,7 +33,7 @@ def parse_post_data(post_byte_data):
     post_json = post_byte_data.decode('utf8').replace("'", '"')
     request = json.loads(post_json)
 
-	#parses the post body into a format handled by the build function
+    # parses the post body into a format handled by the build function
     url = request["repository"]["html_url"]
     ref = request["ref"]
     branch = ref.replace("/", " ").split(" ")[-1]
@@ -36,6 +41,7 @@ def parse_post_data(post_byte_data):
     pusher_name = request["pusher"]["name"]
     full_repo_name = request["repository"]["full_name"] + "/" + branch
     date = request["head_commit"]["timestamp"]
+    last_commit_id = request["commits"][0]
 
     body_data = {
         "url": url,
@@ -45,6 +51,7 @@ def parse_post_data(post_byte_data):
         "date": date,
         "pusher_name": pusher_name,
         "pusher_email": pusher_email,
+        "last_commit_id": last_commit_id,
     }
     return body_data
 
@@ -69,22 +76,13 @@ def test(temp_path):
     function runs the test.py file from the server
     and returns array with number of tests passed and total number of tests
     """
-    test_path = temp_path + '/test/test.py'
-    
-    test_suite = unittest.TestLoader().loadTestsFromTestCase(test_path)
+    sys.path.append(temp_path + '/test')
+    import test_test
+    test_suite = unittest.TestLoader().loadTestsFromModule(test_test)
     tests_run = unittest.TextTestRunner(verbosity=2).run(test_suite)
     tests_passed = tests_run.testsRun - len(tests_run.failures)
 
     return (tests_passed, tests_run.testsRun)
-
-
-    print('Result:', tests_passed.wasSuccessful())
-    for failure in tests_passed.failures:
-        print('Failure:', failure[0])
-
-    results = test.test_file_exists()
-    print("Passed:", results[0], "of", results[1], "tests.")
-
 
 
 def save_results(body_data, build_res, test_res, temp_path):
@@ -100,10 +98,10 @@ def save_results(body_data, build_res, test_res, temp_path):
     result in a readable format by sending an email.
     """
 
-    repo = temp_path
-    tree = repo.tree()
-    id = tree.commit_id
-    commit = next(repo.iter_commits(paths=tree[0].path, max_count=1))
+    #repo = temp_path
+    #tree = repo.tree()
+    id = body_data["last_commit_id"]
+    #commit = next(repo.iter_commits(paths=tree[0].path, max_count=1))
     date = body_data["date"]
     # If date needs to be converted from UNIXtime to datetime; uncomment below.
     #date_datetime = datetime.utcfromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S')
@@ -120,7 +118,8 @@ def save_results(body_data, build_res, test_res, temp_path):
     elif build_res == 0:
         build_status = "not ok"
     test_status = ""
-    if (test_res[0] == test_res[1]):  # True or anything signaling all tests have been passed.
+    # True or anything signaling all tests have been passed.
+    if (test_res[0] == test_res[1]):
         test_status = "all tests passed!"
     else:
         test_status = str(test_res[0]) + "/" + str(test_res[1])
@@ -135,21 +134,14 @@ def save_results(body_data, build_res, test_res, temp_path):
     return out
 
 
-def restore():
-    """
-    TBD
-    """
-    print()
-    # deletes the cloned repo and compiled code in preparation for next webhook
-
 def send_email(message):
     """
     Sends an email with information about the commit and the test results
     """
     receiver_email = "gustawsi@ug.kth.se,adriankv@ug.kth.se"
     sender_email = "continuousintegration2023@gmail.com"
-    # the password will be integrated into the code but not here on github :)
-    password = input(str("please enter your password : "))
+    # the password will be integrated into the code but not here on github 🙂
+    #password = input(str("please enter your password : "))
     simple_email_context = ssl.create_default_context()
     smtp_port = 587			# Standard secure SMTP port
     smtp_server = "smtp.gmail.com"  # Google SMTP Server
@@ -157,7 +149,7 @@ def send_email(message):
     try:
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls(context=simple_email_context)
-        server.login(sender_email, password)
+        server.login(sender_email, "bmvk xgju anqh kloq")
         server.sendmail(sender_email, receiver_email, message)  # Sends email
         print("Email has been sent to", receiver_email)
 
