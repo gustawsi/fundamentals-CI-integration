@@ -1,12 +1,16 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import time
 import server_funcs
 
 hostName = "localhost"
 serverPort = 8011
 
 class Server(BaseHTTPRequestHandler):
-  
+    """
+    A simple server with a do_GET method and a do_POST method. 
+    The server is a continuous integration server that can be connected to different github webhooks 
+    to perform automatic tests on newly pushed changes.
+    """
+
     def do_GET(self):
       self.send_response(200)
       self.send_header("Content-type", "text/html")
@@ -22,19 +26,25 @@ class Server(BaseHTTPRequestHandler):
 
     
     def do_POST(self):
+        """
+        Handles incoming http POST requests. 
+        Parses it, builds + tests corresponding repository and saves the result.
+        """
+        content_len = int(self.headers.get('Content-Length'))
+        post_byte_data = self.rfile.read(content_len)
+        body_data = server_funcs.parse_post_data(post_byte_data)
+        temp_path = server_funcs.create_temp_path()
+
         self.send_response(200)
-          
-        server_funcs.build(self.parse_post_json())
+        build_res = server_funcs.build(body_data, temp_path)
         #check if build suceeded - yes, continue with test, else skip to save results
-        server_funcs.test(temp_path)
-        server_funcs.save_results()
+        test_res = server_funcs.test()
+        out = server_funcs.save_results(body_data, build_res, test_res, temp_path)
+        print(out) # Out should be input for notify()
         server_funcs.restore()
 
 
-    def parse_post_json(self):
-	    #parses the post body into a format handled by the build function
-        return post_json
-
+# Starts up the server on selected port
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), Server)
     print("Server started http://%s:%s" % (hostName, serverPort))
