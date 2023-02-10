@@ -25,7 +25,7 @@ def parse_post_data(post_byte_data):
     post_json = post_byte_data.decode('utf8').replace("'", '"')
     request = json.loads(post_json)
 
-	    #parses the post body into a format handled by the build function
+	#parses the post body into a format handled by the build function
     url = request["repository"]["html_url"]
     ref = request["ref"]
     branch = ref.replace("/", " ").split(" ")[-1]
@@ -86,12 +86,12 @@ def save_results(body_data, build_res, test_res, temp_path):
     tree = repo.tree()
     id = tree.commit_id
     commit = next(repo.iter_commits(paths=tree[0].path, max_count=1))
-    date = commit.committed_date
-    date_datetime = datetime.utcfromtimestamp(
-        date).strftime('%Y-%m-%d %H:%M:%S')
+    date = body_data["date"]
+    # If date needs to be converted from UNIXtime to datetime; uncomment below.
+    #date_datetime = datetime.utcfromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S')
 
     commit_id = id
-    commit_date = date_datetime
+    commit_date = date
     commit_branch = body_data["branch"]
     committed_by = body_data["pusher_email"]
 
