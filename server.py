@@ -26,11 +26,11 @@ class Server(BaseHTTPRequestHandler):
           
         server_funcs.build(self.parse_post_json())
         #check if build suceeded - yes, continue with test, else skip to save results
-        server_funcs.test()
+        server_funcs.test(temp_path)
         server_funcs.save_results()
         server_funcs.restore()
 
-    
+
     def parse_post_json(self):
 	    #parses the post body into a format handled by the build function
         return post_json
