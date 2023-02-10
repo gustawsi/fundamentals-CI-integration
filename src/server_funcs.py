@@ -135,9 +135,6 @@ def save_results(body_data, build_res, test_res, temp_path):
     return out
 
 
-
-
-
 def restore():
     """
     TBD
@@ -145,22 +142,11 @@ def restore():
     print()
     # deletes the cloned repo and compiled code in preparation for next webhook
 
-
-def notify():
+def send_email(message):
     """
-    TBD
+    Sends an email with information about the commit and the test results
     """
-    print()
-    # when code is received
-    #	send emails to everyone to tell them code was recieved
-    # then tests are done
-    # test results are sent to ... everyone? or just the person who sent the code?
-
-
-def send_email(receiver_email, message):
-    """
-    Sends an email with the test results
-    """
+    receiver_email = "gustawsi@ug.kth.se,adriankv@ug.kth.se"
     sender_email = "continuousintegration2023@gmail.com"
     # the password will be integrated into the code but not here on github :)
     password = input(str("please enter your password : "))
