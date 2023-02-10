@@ -120,10 +120,10 @@ def save_results(body_data, build_res, test_res, temp_path):
     elif build_res == 0:
         build_status = "not ok"
     test_status = ""
-    if test_res == True:  # True or anything signaling all tests have been passed.
+    if (test_res[0] == test_res[1]):  # True or anything signaling all tests have been passed.
         test_status = "all tests passed!"
     else:
-        test_status = test_res  # Passes / total amount of tests
+        test_status = str(test_res[0]) + "/" + str(test_res[1])
     ##
 
     # Construct Out string with build information
