@@ -6,6 +6,9 @@ import tempfile
 import json
 import config
 from datetime import datetime
+import requests
+import unittest
+import subprocess
 
 def create_temp_path():
 	temp_dir = tempfile.TemporaryDirectory()
@@ -61,12 +64,27 @@ def build(body, temp_path):
         return 0
 
 
-def test():
+def test(temp_path):
     """
-    TBD
+    function runs the test.py file from the server
+    and returns array with number of tests passed and total number of tests
     """
-    print()
-    # runs tests
+    test_path = temp_path + '/test/test.py'
+    
+    test_suite = unittest.TestLoader().loadTestsFromTestCase(test_path)
+    tests_run = unittest.TextTestRunner(verbosity=2).run(test_suite)
+    tests_passed = tests_run.testsRun - len(tests_run.failures)
+
+    return (tests_passed, tests_run.testsRun)
+
+
+    print('Result:', tests_passed.wasSuccessful())
+    for failure in tests_passed.failures:
+        print('Failure:', failure[0])
+
+    results = test.test_file_exists()
+    print("Passed:", results[0], "of", results[1], "tests.")
+
 
 
 def save_results(body_data, build_res, test_res, temp_path):
