@@ -38,7 +38,7 @@ class Server(BaseHTTPRequestHandler):
         self.send_response(200)
         build_res = server_funcs.build(body_data, temp_path)
         #check if build suceeded - yes, continue with test, else skip to save results
-        test_res = server_funcs.test()
+        test_res = server_funcs.test(temp_path)
         out = server_funcs.save_results(body_data, build_res, test_res, temp_path)
         print(out) # Out should be input for notify();
         server_funcs.restore()
