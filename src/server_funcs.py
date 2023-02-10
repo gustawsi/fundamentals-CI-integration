@@ -138,7 +138,7 @@ def send_email(message):
     """
     Sends an email with information about the commit and the test results
     """
-    receiver_email = "gustawsi@ug.kth.se,adriankv@ug.kth.se"
+    receiver_email = "gustawsi@kth.se,adriankv@kth.se"
     sender_email = "continuousintegration2023@gmail.com"
     #password = input(str("please enter your password : "))
     simple_email_context = ssl.create_default_context()
