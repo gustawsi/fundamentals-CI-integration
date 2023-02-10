@@ -41,7 +41,7 @@ def parse_post_data(post_byte_data):
     pusher_name = request["pusher"]["name"]
     full_repo_name = request["repository"]["full_name"] + "/" + branch
     date = request["head_commit"]["timestamp"]
-    last_commit_id = request["commits"][0]
+    last_commit_id = request["commits"][0]["id"]
 
     body_data = {
         "url": url,
@@ -138,7 +138,7 @@ def send_email(message):
     """
     Sends an email with information about the commit and the test results
     """
-    receiver_email = "gustawsi@ug.kth.se,adriankv@ug.kth.se"
+    receiver_email = "gustawsi@kth.se,adriankv@kth.se"
     sender_email = "continuousintegration2023@gmail.com"
     #password = input(str("please enter your password : "))
     simple_email_context = ssl.create_default_context()
