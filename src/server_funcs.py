@@ -138,19 +138,18 @@ def send_email(message):
     """
     Sends an email with information about the commit and the test results
     """
-    receiver_email = "gustawsi@kth.se,adriankv@kth.se"
     sender_email = "continuousintegration2023@gmail.com"
-    #password = input(str("please enter your password : "))
     simple_email_context = ssl.create_default_context()
-    smtp_port = 587			# Standard secure SMTP port
+    smtp_port = 587			        # Standard secure SMTP port
     smtp_server = "smtp.gmail.com"  # Google SMTP Server
+    recipient_emails = ["gustawsi@kth.se","adriankv@kth.se","annakris@kth.se"]
+    for recipient in recipient_emails:
+        try:
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls(context=simple_email_context)
+            server.login(sender_email, "bmvk xgju anqh kloq")
+            server.sendmail(sender_email, recipient, message)  # Sends email
+            print("Email has been sent to", recipient)
 
-    try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls(context=simple_email_context)
-        server.login(sender_email, "bmvk xgju anqh kloq")
-        server.sendmail(sender_email, receiver_email, message)  # Sends email
-        print("Email has been sent to", receiver_email)
-
-    except Exception as e:
-        print(e)
+        except Exception as e:
+            print(e)
