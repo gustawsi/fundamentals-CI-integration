@@ -143,7 +143,7 @@ def send_email(message):
     simple_email_context = ssl.create_default_context()
     smtp_port = 587			        # Standard secure SMTP port
     smtp_server = "smtp.gmail.com"  # Google SMTP Server
-    recipient_emails = ["gustawsi@kth.se","adriankv@kth.se","adrian.valdani@telia.com","annakris@kth.se","ak9522@gmail.com", "levileyh@gmail.com"]
+    recipient_emails = ["gustawsi@kth.se"]
     for recipient in recipient_emails:
         try:
             server = smtplib.SMTP(smtp_server, smtp_port)
