@@ -76,11 +76,17 @@ def test(temp_path):
     function runs the test.py file from the server
     and returns array with number of tests passed and total number of tests
     """
-    sys.path.append(temp_path + '/test')
+    test_path = temp_path + '/test'
+    sys.path.append(test_path)
     import test_test
     test_suite = unittest.TestLoader().loadTestsFromModule(test_test)
     tests_run = unittest.TextTestRunner(verbosity=2).run(test_suite)
     tests_passed = tests_run.testsRun - len(tests_run.failures)
+    sys.modules.pop('test_test')
+    path_removed = False
+    while not path_removed:
+        path_removed = sys.path.pop() == test_path
+        print (path_removed)
 
     return (tests_passed, tests_run.testsRun)
 
