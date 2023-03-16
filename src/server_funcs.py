@@ -86,7 +86,6 @@ def test(temp_path):
     path_removed = False
     while not path_removed:
         path_removed = sys.path.pop() == test_path
-        print (path_removed)
 
     return (tests_passed, tests_run.testsRun)
 
