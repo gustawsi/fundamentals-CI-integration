@@ -6,7 +6,7 @@ class TestServer(unittest.TestCase):
 
     
     def test_file_exists(self):
-        self.assertTrue(True)
+        self.assertTrue(False)
 
 
 if __name__ == "__main__" :
