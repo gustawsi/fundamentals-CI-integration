@@ -8,7 +8,7 @@ class TestServer(unittest.TestCase):
         self.assertTrue(True)
     
     def test_file_exists(self):
-        self.assertTrue(True)
+        self.assertTrue(False)
 
 
 if __name__ == "__main__" :
